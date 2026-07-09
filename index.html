@@ -3,6 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sirenos del Abismo — Inscripción cerrada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Unbounded:wght@400;600;800;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --abyss: #061a26;
+            --abyss-deep: #030f18;
+            --sea: #0e3b52;
+            --cyan: #4ce8d8;
+            --magenta: #ff3fa4;
+            --gold: #f4c452;
+            --purple: #8a4fc4;
+            --foam: #eafdfb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(ellipse 120% 80% at 50% -10%, var(--sea) 0%, transparent 55%), linear-gradient(180deg, var(--abyss) 0%, var(--abyss-deep) 65%, #010a10 100%);
+            color: var(--foam);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scale texture overlay */
+        .scales {
+            position: fixed;
+            inset: 0;
+            opacity: 0.06;
+            pointer-events: none;
+            background-image: radial-gradient(circle at 10px 10px, transparent 8px, var(--cyan) 8.5px, transparent 9px);
+            background-size: 34px 34px;
+            z-index: 0;
+        }
+
+        /* Bubbles */
+        .bubbles {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -10%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(76,232,216,0.05) 70%);
+            border: 1px solid rgba(76,232,216,0.25);
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-115vh) translateX(var(--drift,20px));
+                opacity: 0;
+            }
+        }
+
+        main {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8vh 6vw 12vh;
+        }
+
+        .eyebrow {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            font-size: 0.7rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1.4rem;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.4rem, 7vw, 5rem);
+            line-height: 1.02;
+            background: linear-gradient(120deg, var(--foam) 20%, var(--cyan) 55%, var(--gold) 90%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(76,232,216,0.25);
+            max-width: 16ch;
+        }
+
+        .subtitle {
+            margin-top: 0.9rem;
+            font-weight: 300;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(234,253,251,0.75);
+            letter-spacing: 0.02em;
+        }
+
+        /* Signature stamp */
+        .stamp-wrap {
+            margin: 4.2rem 0 3rem;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stamp {
+            position: relative;
+            width: clamp(220px, 34vw, 320px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-9deg);
+            background: radial-gradient(circle at 50% 40%, rgba(255,63,164,0.12), transparent 70%);
+            border: 3px solid var(--magenta);
+            box-shadow: 0 0 25px rgba(255,63,164,0.55), 0 0 70px rgba(255,63,164,0.25), inset 0 0 25px rgba(255,63,164,0.35);
+            animation: pulse-glow 3.2s ease-in-out infinite;
+        }
+
+            .stamp::before {
+                content: "";
+                position: absolute;
+                inset: 10px;
+                border-radius: 50%;
+                border: 1.5px dashed rgba(255,63,164,0.55);
+            }
+
+        .stamp-text {
+            font-family: 'Monoton', cursive;
+            font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+            line-height: 1.25;
+            color: var(--magenta);
+            text-shadow: 0 0 10px rgba(255,63,164,0.8), 0 0 26px rgba(255,63,164,0.5);
+            letter-spacing: 0.04em;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(255,63,164,0.55), 0 0 70px rgba(255,63,164,0.25), inset 0 0 25px rgba(255,63,164,0.35);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255,63,164,0.85), 0 0 100px rgba(255,63,164,0.4), inset 0 0 35px rgba(255,63,164,0.5);
+            }
+        }
+
+        .message {
+            max-width: 46ch;
+            font-weight: 400;
+            font-size: clamp(0.95rem, 1.6vw, 1.08rem);
+            color: rgba(234,253,251,0.85);
+            line-height: 1.65;
+        }
+
+            .message strong {
+                color: var(--cyan);
+                font-weight: 600;
+            }
+
+        .cta {
+            margin-top: 2.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.95rem 2.1rem;
+            border-radius: 100px;
+            background: rgba(76,232,216,0.06);
+            border: 1.5px solid rgba(76,232,216,0.35);
+            color: rgba(234,253,251,0.55);
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            cursor: not-allowed;
+            user-select: none;
+        }
+
+            .cta .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--magenta);
+                box-shadow: 0 0 8px var(--magenta);
+            }
+
+        footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 6vw 5vh;
+            font-size: 0.8rem;
+            color: rgba(234,253,251,0.45);
+            font-style: italic;
+        }
+
+            footer span {
+                color: var(--gold);
+                font-style: normal;
+                font-weight: 500;
+            }
+
+        /* Wave divider */
+        .wave {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            line-height: 0;
+            margin-top: -6vh;
+        }
+
+            .wave svg {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bubble {
+                animation: none;
+                opacity: 0.15;
+            }
+
+            .stamp {
+                animation: none;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        @media (max-width:480px) {
+            .eyebrow {
+                letter-spacing: 0.25em;
+            }
+
+            .message {
+                max-width: 32ch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scales"></div>
+    <div class="bubbles" id="bubbles"></div>
+
+    <main>
+        <p class="eyebrow">Sirenos de ciudad · 40 años</p>
+        <h1>Las profundidades ya están llenas</h1>
+        <p class="subtitle">Nos preparamos para recibir a los sirenos confirmados.</p>
+
+        <div class="stamp-wrap">
+            <div class="stamp">
+                <p class="stamp-text">Inscripción<br>cerrada</p>
+            </div>
+        </div>
+
+        <p class="message">
+            Gracias por querer sumergirte con nosotros. <strong>El cupo se agotó</strong> —
+            entre escamas, brillo y drags, ya no queda espacio en el abismo. Si quedaste en
+            lista de espera, te escribimos por WhatsApp apenas se libere un lugar.
+        </p>
+
+        <div class="cta">
+            <span class="dot"></span>
+            Cupo lleno
+        </div>
+    </main>
+
+    <div class="wave">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path fill="#0e3b52" fill-opacity="0.5" d="M0,64 C240,110 480,10 720,40 C960,70 1200,120 1440,64 L1440,120 L0,120 Z"></path>
+            <path fill="#061a26" d="M0,90 C240,40 480,120 720,80 C960,40 1200,100 1440,60 L1440,120 L0,120 Z"></path>
+        </svg>
+    </div>
+
+    <footer>
+        Nos vemos en el fondo del mar. <span>Cuida tu entrada — no es transferible.</span>
+    </footer>
+
+    <script>
+        const container = document.getElementById('bubbles');
+        const count = window.innerWidth < 600 ? 16 : 28;
+        for (let i = 0; i < count; i++) {
+            const b = document.createElement('div');
+            b.className = 'bubble';
+            const size = 4 + Math.random() * 22;
+            b.style.width = size + 'px';
+            b.style.height = size + 'px';
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+            const duration = 9 + Math.random() * 14;
+            b.style.animationDuration = duration + 's';
+            b.style.animationDelay = (Math.random() * duration) + 's';
+            container.appendChild(b);
+        }
+    </script>
+
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:image" content="imagenW.jpeg">
     <title>Sirenos de ciudad</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1119,7 +1459,7 @@
 
     <nav id="nav">
         <a class="nb" href="#"></a>
-        
+
     </nav>
 
     <div class="mbar">
@@ -1146,12 +1486,12 @@
                 A los 40 las aguas se vuelven más profundas y los secretos más interesantes.<br>
                 Te invito a sumergirte conmigo en un día de sol indomable, vibras positivas<br>
                 y el encanto místico de los sirenos masculinos. <em>¿Estás listo para la magia?</em>
-            </p>
+            </p>-->
             <!--<div class="hctas">
                 <a href="#rsvp" class="bg1">🌊 Sumergirse</a>
                 <a href="#dresscode" class="bg2">Ver Estilos</a>
             </div>-->
-        </div>
+        <!--</div>
         <div class="sarr" style="position:absolute; bottom:2rem; color:var(--teal); font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; animation:bounce 2s infinite;">Scroll</div>
     </section>
 
@@ -1512,4 +1852,4 @@
         });
     </script>
 </body>
-</html>
+</html>-->
